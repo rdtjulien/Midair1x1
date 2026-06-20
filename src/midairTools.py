@@ -1,14 +1,12 @@
 import math
 
-class Midair:
-    def __init__(self):
-        self.airDrag = 0.9800000190734863
-        self.gravity = 0.04
+airDrag = 0.9800000190734863
+gravity = 0.04
 
 def barrelCalc(powerX, powerY, powerZ, projX, projY, projZ):
-    deltaX = powerX - projX
-    deltaY = powerY - projY
-    deltaZ = powerZ - projZ
+    deltaX = projX - powerX
+    deltaY = projY - powerY
+    deltaZ = projZ - powerZ
 
     distance = math.sqrt(deltaX**2 + deltaY**2 + deltaZ**2)
 
