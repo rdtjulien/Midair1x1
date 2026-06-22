@@ -1,16 +1,16 @@
 from src.midairTools import barrelCalc, airDrag, gravity, headBlock
 
-powerSandX, powerSandY, powerSandZ = 368006.5, 5.0, -396813.49000000954
-powerHammerX, powerHammerY, powerHammerZ = 368006.5, 5.0, -396813.49000000954
-sandX, sandY, sandZ = 368007.00999999046, 5.519999980926514, -396812.50999999046
-hammerX, hammerY, hammerZ = 368007.00999999046, 5.519999980926514, -396812.50999999046
+powerSandX, powerSandY, powerSandZ = 368063.50999999046, 208.0, -396802.50999999046
+powerHammerX, powerHammerY, powerHammerZ = 368063.50999999046, 208.0, -396802.50999999046
+sandX, sandY, sandZ = 368064.00999999046, 208.5199999809265, -396801.49000000954
+hammerX, hammerY, hammerZ = 368064.00999999046, 208.5199999809265, -396801.50999999046
 
-heightAdjustY = 11 + headBlock
+heightAdjustY = 254 + headBlock
 
-tntAmount = 200
-gametickMax = 10
+tntAmount = 1000
+gametickMax = 16
 
-diffGametick = 2
+diffGametick = 4
 
 axis = "z"
 
@@ -33,8 +33,8 @@ def calcRatio(sandEfficiency, hammerEfficiency, projSand, projHammer):
             velocity = rangeSandValue * airDrag
 
             rangeSandValueY -= gravity
-            rangeSandValueY *= airDrag
             rangeSandTotalY += rangeSandValueY
+            rangeSandValueY *= airDrag
 
             if 0.49 <= rangeSandTotal % 1 <= 0.51:
                 for k in range(i,limitPower):
@@ -49,8 +49,8 @@ def calcRatio(sandEfficiency, hammerEfficiency, projSand, projHammer):
                         rangeHammerTotal += rangeHammerValue
 
                         rangeHammerValueY -= gravity
-                        rangeHammerValueY *= airDrag
                         rangeHammerTotalY += rangeHammerValueY
+                        rangeHammerValueY *= airDrag
 
                     if 0 <= rangeHammerTotal - rangeSandTotal <= 4:
                         _, ratioHammerEfficiencyY, ratioHammerEfficiencyZ, ratioHammerDistanceEfficiency = barrelCalc(1, rangeHammerTotalY, rangeHammerTotal, 1, rangeSandTotalY, rangeSandTotal)
@@ -74,12 +74,10 @@ def calcRatio(sandEfficiency, hammerEfficiency, projSand, projHammer):
                             
                         if velocityFinalY < 1:
                             print("SAND")
-                            print(f"Power {i} | Position {rangeSandTotal} | Distance {abs(rangeSandTotal - rangeSandValue)} | Gametick {j} | Velocity {velocity}")
-                            print(f"Power {i} | Position {rangeSandTotalY} | Gametick {j}")
+                            print(f"Power {i} | Position {rangeSandTotal} | Distance {rangeSandTotal - projSand} | Gametick {j} | Velocity {velocity} | Position Y {rangeSandTotalY}")
                             print("HAMMER")
-                            print(f"Power {k} | Position {rangeHammerTotal} | Distance {abs(rangeHammerTotal - rangeHammerValue)} | Gametick {l}")
-                            print(f"Power {k} | Position {rangeHammerTotalY} | Gametick {l}")
-                            print(f"Hammer {bestHammer} | velocity {bestDiff} | Y-velocity {velocityFinalY}\n")
+                            print(f"Power {k} | Position {rangeHammerTotal} | Gametick {l} | Position Y {rangeHammerTotalY}")
+                            print(f"Hammer ~{bestHammer} | velocity {bestDiff} | Y-velocity {velocityFinalY}\n")
 
 if axis == "z":
     calcRatio(sandEfficiencyZ, hammerEfficiencyZ, sandZ, hammerZ)
