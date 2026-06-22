@@ -19,10 +19,9 @@ limitPower = 5000
 sandEfficiencyX, sandEfficiencyY, sandEfficiencyZ, sandDistanceEfficiency = barrelCalc(powerSandX, powerSandY, powerSandZ, sandX, sandY, sandZ)
 hammerEfficiencyX, hammerEfficiencyY, hammerEfficiencyZ, hammerDistanceEfficiency = barrelCalc(powerHammerX, powerHammerY, powerHammerZ, hammerX, hammerY, hammerZ)
 
-
 def calcRatio(sandEfficiency, hammerEfficiency, projSand, projHammer):
-    for i in range(1):
-        rangeSandValue = sandEfficiency * sandDistanceEfficiency * 110
+    for i in range(tntAmount):
+        rangeSandValue = sandEfficiency * sandDistanceEfficiency * i
         rangeSandTotal = rangeSandValue + projSand
 
         rangeSandValueY = 0.0
@@ -31,16 +30,14 @@ def calcRatio(sandEfficiency, hammerEfficiency, projSand, projHammer):
         for j in range(2, gametickMax):
             rangeSandValue *= airDrag
             rangeSandTotal += rangeSandValue
+            velocity = rangeSandValue * airDrag
 
             rangeSandValueY -= gravity
             rangeSandValueY *= airDrag
             rangeSandTotalY += rangeSandValueY
 
             if 0.49 <= rangeSandTotal % 1 <= 0.51:
-                print("SAND")
-                print(f"Power {i} | Position {rangeSandTotal} | Distance {abs(rangeSandTotal - rangeSandValue)} | Gametick {j}")
-                print(f"Power {i} | Position {rangeSandTotalY} | Gametick {j}\n")
-                for k in range(110,limitPower):
+                for k in range(i,limitPower):
                     rangeHammerValue = hammerEfficiency * hammerDistanceEfficiency * k
                     rangeHammerTotal = rangeHammerValue + projHammer
 
@@ -55,11 +52,34 @@ def calcRatio(sandEfficiency, hammerEfficiency, projSand, projHammer):
                         rangeHammerValueY *= airDrag
                         rangeHammerTotalY += rangeHammerValueY
 
-                    if rangeHammerTotal >= rangeSandTotal -3 and rangeHammerTotal <= rangeSandTotal +3:
-                        print("HAMMER")
-                        print(f"Power {k} | Position {rangeHammerTotal} | Distance {abs(rangeHammerTotal - rangeHammerValue)} | Gametick {l}")
-                        print(f"Power {k} | Position {rangeHammerTotalY} | Gametick {l}\n")
-                        
+                    if 0 <= rangeHammerTotal - rangeSandTotal <= 4:
+                        _, ratioHammerEfficiencyY, ratioHammerEfficiencyZ, ratioHammerDistanceEfficiency = barrelCalc(1, rangeHammerTotalY, rangeHammerTotal, 1, rangeSandTotalY, rangeSandTotal)
+
+                        bestHammer = None
+                        bestDiff = float("inf")
+
+                        for m in range(limitPower):
+                            velocityHammerZ = ratioHammerEfficiencyZ * ratioHammerDistanceEfficiency *m
+
+                            velocityFinalZ = velocity + velocityHammerZ
+
+                            diff = abs(velocityFinalZ)
+
+                            if diff < bestDiff:
+                                bestDiff = diff
+                                bestHammer = m
+
+                        velocitySandY = ratioHammerEfficiencyY * ratioHammerDistanceEfficiency * bestHammer
+                        velocityFinalY = rangeSandTotalY + velocitySandY + rangeSandValueY
+                            
+                        if velocityFinalY < 1:
+                            print("SAND")
+                            print(f"Power {i} | Position {rangeSandTotal} | Distance {abs(rangeSandTotal - rangeSandValue)} | Gametick {j} | Velocity {velocity}")
+                            print(f"Power {i} | Position {rangeSandTotalY} | Gametick {j}")
+                            print("HAMMER")
+                            print(f"Power {k} | Position {rangeHammerTotal} | Distance {abs(rangeHammerTotal - rangeHammerValue)} | Gametick {l}")
+                            print(f"Power {k} | Position {rangeHammerTotalY} | Gametick {l}")
+                            print(f"Hammer {bestHammer} | velocity {bestDiff} | Y-velocity {velocityFinalY}\n")
 
 if axis == "z":
     calcRatio(sandEfficiencyZ, hammerEfficiencyZ, sandZ, hammerZ)
