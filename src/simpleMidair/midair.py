@@ -1,14 +1,15 @@
 from src.midairTools import barrelCalc, airDrag, gravity, headBlock
 
-powerSandX, powerSandY, powerSandZ = 368063.50999999046, 208.0, -396802.50999999046
-powerHammerX, powerHammerY, powerHammerZ = 368063.50999999046, 208.0, -396802.50999999046
-sandX, sandY, sandZ = 368064.00999999046, 208.5199999809265, -396801.49000000954
-hammerX, hammerY, hammerZ = 368064.00999999046, 208.5199999809265, -396801.50999999046
+# Change parameters here
+powerSandX, powerSandY, powerSandZ = 368092.50999999046, 6.0, -396871.50999999046
+powerHammerX, powerHammerY, powerHammerZ = 368092.50999999046, 6.0, -396871.50999999046
+sandX, sandY, sandZ = 368092.88499999046, 6.519999980926514, -396870.50999999046
+hammerX, hammerY, hammerZ = 368092.88499999046, 6.519999980926512, -396870.49000000954
 
 heightAdjustY = 254 + headBlock
 
-tntAmount = 1000
-gametickMax = 16
+tntAmount = 324
+gametickMax = 24
 
 diffGametick = 4
 
@@ -53,17 +54,23 @@ def calcRatio(sandEfficiency, hammerEfficiency, projSand, projHammer):
                         rangeHammerValueY *= airDrag
 
                     if 0 <= rangeHammerTotal - rangeSandTotal <= 4:
-                        _, ratioHammerEfficiencyY, ratioHammerEfficiencyZ, ratioHammerDistanceEfficiency = barrelCalc(1, rangeHammerTotalY, rangeHammerTotal, 1, rangeSandTotalY, rangeSandTotal)
-
+                        if axis == "z":
+                            _, ratioHammerEfficiencyY, ratioHammerEfficiencyZ, ratioHammerDistanceEfficiency = barrelCalc(1, rangeHammerTotalY, rangeHammerTotal, 1, rangeSandTotalY, rangeSandTotal)
+                        else:
+                            ratioHammerEfficiencyX, ratioHammerEfficiencyY, _, ratioHammerDistanceEfficiency = barrelCalc(rangeHammerTotal, rangeHammerTotalY, 1, rangeSandTotal, rangeSandTotalY, 1)
+                        
                         bestHammer = None
                         bestDiff = float("inf")
 
                         for m in range(limitPower):
-                            velocityHammerZ = ratioHammerEfficiencyZ * ratioHammerDistanceEfficiency *m
+                            if axis == "z":
+                                velocityHammer = ratioHammerEfficiencyZ * ratioHammerDistanceEfficiency *m
+                            else:
+                                velocityHammer = ratioHammerEfficiencyX * ratioHammerDistanceEfficiency *m
 
-                            velocityFinalZ = velocity + velocityHammerZ
+                            velocityFinal = velocity + velocityHammer
 
-                            diff = abs(velocityFinalZ)
+                            diff = abs(velocityFinal)
 
                             if diff < bestDiff:
                                 bestDiff = diff
@@ -77,7 +84,7 @@ def calcRatio(sandEfficiency, hammerEfficiency, projSand, projHammer):
                             print(f"Power {i} | Position {rangeSandTotal} | Distance {rangeSandTotal - projSand} | Gametick {j} | Velocity {velocity} | Position Y {rangeSandTotalY}")
                             print("HAMMER")
                             print(f"Power {k} | Position {rangeHammerTotal} | Gametick {l} | Position Y {rangeHammerTotalY}")
-                            print(f"Hammer ~{bestHammer} | velocity {bestDiff} | Y-velocity {velocityFinalY}\n")
+                            print(f"Hammer {bestHammer} | velocity {bestDiff} | Y-velocity {velocityFinalY}\n")
 
 if axis == "z":
     calcRatio(sandEfficiencyZ, hammerEfficiencyZ, sandZ, hammerZ)
