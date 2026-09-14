@@ -1,12 +1,12 @@
-from src.midairTools import barrelCalc, airDrag, gravity, headBlock
+from src.py.midairTools import barrelCalc, airDrag, gravity, headBlock
 
 # Change parameters here
-powerSandX, powerSandY, powerSandZ = 367911.49000000954, 17.0, -396863.50999999046
-powerHammerX, powerHammerY, powerHammerZ = 367911.49000000954, 17.0, -396863.50999999046
-sandX, sandY, sandZ = 367910.49000000954, 18.019999980926514, -396864.50999999046
-hammerX, hammerY, hammerZ = 367910.49000000954, 18.019999980926514, -396864.50999999046
+powerSandX, powerSandY, powerSandZ = -494265.49000000954, 14.0, -501327.49000000954
+powerHammerX, powerHammerY, powerHammerZ = -494265.49000000954, 14.0, -501327.49000000954
+sandX, sandY, sandZ = -494264.49000000954, 14.979999981820583, -501326.24000000954
+hammerX, hammerY, hammerZ = -494264.49000000954, 14.979999981820582, -501326.24000000954
 
-heightAdjustY = 254 + headBlock
+heightAdjustY = 25 + headBlock
 
 tntAmount = 400
 gametickMax = 24

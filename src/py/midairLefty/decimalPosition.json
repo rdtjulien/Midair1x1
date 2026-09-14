@@ -1,0 +1,41 @@
+{
+  "north": {
+    "block": 0.49000000954,
+    "chest": 0.42750000954,
+    "anvil": 0.36500000954,
+    "wall pillar": 0.24000000954,
+    "wall thinner": 0.17750000954,
+    "fence": 0.11500000954,
+    "sideways bar/pane": 0.05250000954,
+    "lengthways bar/pane or head": -0.00999999046,
+    "cocoa bean growth 1": -0.07249999046,
+    "cocoa bean growth 0": -0.19749999046,
+    "trapdoor": -0.32249999046,
+    "ladder": -0.38499999046
+  },
+  
+  "south": {
+    "block": -0.49000000954,
+    "chest": -0.42750000954,
+    "anvil": -0.36500000954,
+    "wall pillar": -0.24000000954,
+    "wall thinner": -0.17750000954,
+    "fence": -0.11500000954,
+    "sideways bar/pane": -0.05250000954,
+    "lengthways bar/pane or head": 0.00999999046,
+    "cocoa bean growth 1": 0.07249999046,
+    "cocoa bean growth 0": 0.19749999046,
+    "trapdoor": 0.32249999046,
+    "ladder": 0.38499999046
+  },
+
+  "top":{
+    "block": 1.0199999809265,
+    "trapdoor": 0.8324999809265,
+    "slab": 0.519999980926514,
+    "cocoa growth 0": 0.4574999809265,
+    "cocoa growth 1": 0.3324999809265,
+    "head": 0.2699999809265,
+    "cocoa growth full": 0.2074999809265
+  }
+}

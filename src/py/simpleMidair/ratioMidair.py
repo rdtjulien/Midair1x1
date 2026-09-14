@@ -1,4 +1,4 @@
-from src.midairTools import barrelCalc, airDrag
+from src.py.midairTools import barrelCalc, airDrag
 
 """
 calculate an 1x1 ratio
@@ -17,11 +17,11 @@ def calcRatio(distanceEfficiency, efficiency, proj, gametickMax, tntAmount):
                 print(f"Power {i} | Position {rangeTotal} | Distance {abs(rangeTotal - proj):.0f} | Gametick {j}")
 
 # Change parameters here
-powerX, powerY, powerZ = 368006.5, 5.0, -396813.49000000954
-projX, projY, projZ = 368007.00999999046, 5.519999980926514, -396812.50999999046
+powerX, powerY, powerZ = 367911.49000000954, 17.0, -396863.50999999046
+projX, projY, projZ = 367910.49000000954, 18.019999980926514, -396864.50999999046
 
-tntAmount = 200
-gametickMax = 10
+tntAmount = 450
+gametickMax = 20
 
 axis = "z"
 

@@ -1,7 +1,7 @@
 import json
-from src.midairTools import barrelCalc, airDrag, gravity, headBlock
+from src.py.midairTools import barrelCalc, airDrag, gravity, headBlock
 
-with open("src/decimalPosition.json", "r") as f:
+with open("src/py/midairLefty/decimalPosition.json", "r") as f:
     decimalPosition = json.load(f)
 
 # Change parameters here
@@ -37,7 +37,7 @@ def calcRatio(sandEfficiency, projSand, leftyDecal):
 
             if 0.49 <= rangeSandTotal % 1 <= 0.51:
                 leftyZ = rangeSandTotal + (1 if velocity > 0 else -1)
-
+                                
                 ratioLeftyX, _, ratioLeftyZ, ratioLeftyDistanceEfficiency = barrelCalc(leftyDecal, 1, leftyZ, sandDecal, 1, rangeSandTotal)
 
                 bestLefty = None
